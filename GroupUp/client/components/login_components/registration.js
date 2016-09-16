@@ -7,7 +7,6 @@ export default class UserLogin extends Component {
     browserHistory.push('/confirmation/');
 
     //Uncomment logic below for actual authentication and user creation
-    /*
     event.preventDefault();
 
     const email = this.refs.email.value;
@@ -36,7 +35,6 @@ export default class UserLogin extends Component {
     } else {
         console.log("Not equal");
     }
-    */
   }
 
   render() {
