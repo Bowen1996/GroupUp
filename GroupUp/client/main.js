@@ -18,6 +18,5 @@ const routes = (
 );
 
 Meteor.startup(() => {
-  injectTapEventPlugin();
   ReactDOM.render(routes, document.querySelector('.render-target'));
 });

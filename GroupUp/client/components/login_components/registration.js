@@ -13,7 +13,7 @@ export default class UserLogin extends Component {
     const password = this.refs.password.value;
     const confirmPassword = this.refs.confirmPassword.value;
 
-    if (password == confirmPassword && password != "" && confirmPassword != "") {
+    if (password == confirmPassword && password != "" && confirmPassword != "" && email != "") {
       const accountInfo = {
         email: email,
         password: password,
