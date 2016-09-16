@@ -54,7 +54,7 @@ export default class UserLogin extends Component {
             </form>
             <button
               onClick={this.onSubmit.bind(this)}
-              className="btn btn-default">
+              className="btn btn-raised btn-default">
               Create Account
             </button>
           </div>

@@ -23,9 +23,9 @@ export default class Splash extends Component {
           </div>
 
           <div className="col-sm-6">
-            <button className="btn btn-default" onClick={this.createStudentAccount.bind(this)}>Create Student Account</button>
+            <button className="btn btn-raised btn-default" onClick={this.createStudentAccount.bind(this)}>Create Student Account</button>
             <br />
-            <button className="btn btn-default" onClick={this.createProfessorAccount.bind(this)}>Create Professor Account</button>
+            <button className="btn btn-raised btn-default" onClick={this.createProfessorAccount.bind(this)}>Create Professor Account</button>
           </div>
         </div>
       </div>
