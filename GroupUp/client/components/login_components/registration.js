@@ -4,8 +4,6 @@ import { Accounts } from 'meteor/accounts-base';
 
 export default class UserLogin extends Component {
   onSubmit(event) {
-    browserHistory.push('/confirmation/');
-
     //Uncomment logic below for actual authentication and user creation
     event.preventDefault();
 
@@ -14,9 +12,14 @@ export default class UserLogin extends Component {
     const confirmPassword = this.refs.confirmPassword.value;
 
     if (password == confirmPassword && password != "" && confirmPassword != "" && email != "") {
+      const isProfessor = this.props.params.userType == "professor";
+
       const accountInfo = {
         email: email,
         password: password,
+        profile: {
+          isProfessor: isProfessor,
+        }
       };
       Accounts.createUser(accountInfo, (error) => {
         if(error) {
@@ -27,7 +30,7 @@ export default class UserLogin extends Component {
               console.log("Could not log in");
             } else {
               //Re-direct them to a page
-              console.log("Success!");
+              browserHistory.push('/confirmation/');
             }
           });
         }
