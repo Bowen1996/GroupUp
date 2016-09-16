@@ -1,10 +1,9 @@
-/* CSS, aka SCSS declarations go here
+/* CSS, aka SCSS declarations go here */
 
-Note from Josiah: SCSS is really cool. Look it up.
-It's just like CSS, but it will save you a lot of time,
-because it allows you to make variables, or extend from
-other css declarations, etc.
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
 
-Basically, CSS where you don't have to copy and paste stuff.
-
-*/
+  display: flex;
+  align-items: center;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 
-class Header extends Component {
+export default class Header extends Component {
   render() {
     return (
       <nav className="nav navbar-default">
@@ -12,5 +12,3 @@ class Header extends Component {
     );
   }
 }
-
-export default Header;
