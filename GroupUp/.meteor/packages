@@ -20,7 +20,6 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 
 twbs:bootstrap
 react-meteor-data
-fourseven:scss
 accounts-password
 accounts-ui-unstyled
 meteortoys:allthings
