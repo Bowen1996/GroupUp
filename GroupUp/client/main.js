@@ -13,7 +13,7 @@ const routes = (
     <Route path="/" component={App}>
       <IndexRoute component={Splash} />
       <Route path="registration/:userType" component={Registration} />
-      <Route path="confirmation" component={Confirmation} />
+      <Route path="confirmation/" component={Confirmation} />
     </Route>
   </Router>
 );

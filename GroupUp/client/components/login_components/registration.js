@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
+import { Accounts } from 'meteor/accounts-base';
 
 export default class UserLogin extends Component {
   onSubmit(event) {
