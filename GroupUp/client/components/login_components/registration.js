@@ -23,7 +23,7 @@ export default class UserLogin extends Component {
       };
       Accounts.createUser(accountInfo, (error) => {
         if(error) {
-          console.log("Error");
+          console.log(error);
         } else {
           Meteor.loginWithPassword(email, password, (error) => {
             if(error) {
@@ -44,19 +44,25 @@ export default class UserLogin extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-sm-6">
-            <h1>Create a {this.props.params.userType} account:</h1>
+          <div className="col-sm-6 margin-30">
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h1>Create a {this.props.params.userType} account:</h1>
+              </div>
 
-            <form>
-              <input ref="email" type="text" name="email" placeholder="Enter email..." className="form-control"/>
-              <input ref="password" type="password" name="password" placeholder="Enter password..." className="form-control" />
-              <input ref="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password..." className="form-control" />
-            </form>
-            <button
-              onClick={this.onSubmit.bind(this)}
-              className="btn btn-raised btn-default">
-              Create Account
-            </button>
+              <div className="panel-body">
+                <form>
+                  <input ref="email" type="text" name="email" placeholder="Enter email..." className="form-control"/>
+                  <input ref="password" type="password" name="password" placeholder="Enter password..." className="form-control" />
+                  <input ref="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password..." className="form-control" />
+                </form>
+                <button
+                  onClick={this.onSubmit.bind(this)}
+                  className="btn btn-raised btn-default">
+                  Create Account
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
