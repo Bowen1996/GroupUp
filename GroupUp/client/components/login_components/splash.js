@@ -19,7 +19,7 @@ export default class Splash extends Component {
       <div>
         <div className="row">
           <div className="col-md-8 col-sm-12">
-            <div className="panel panel-default height-50-percent margin-30">
+            <div className="panel panel-default height-50-percent">
               <div className="panel-heading text-center">
                 Already a user?
               </div>
@@ -30,7 +30,7 @@ export default class Splash extends Component {
           </div>
 
           <div className="col-md-4 col-sm-12">
-            <div className="panel panel-default height-50-percent margin-30">
+            <div className="panel panel-default height-50-percent">
               <div className="panel-heading text-center">
                 Want to create an account?
               </div>

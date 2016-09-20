@@ -40,27 +40,54 @@ export default class UserLogin extends Component {
     }
   }
 
+  goBack(event) {
+    event.preventDefault();
+
+    browserHistory.push('/');
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-sm-6 margin-30">
+          <div className="col-sm-6">
+            <button onClick={this.goBack.bind(this)}
+              className="btn btn-raised btn-default">
+              &larr; Back</button>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-sm-12">
             <div className="panel panel-default">
-              <div className="panel-heading">
-                <h1>Create a {this.props.params.userType} account:</h1>
+              <div className="panel-heading margin-bottom">
+                <h3>Create a {this.props.params.userType} account:</h3>
               </div>
 
               <div className="panel-body">
-                <form>
-                  <input ref="email" type="text" name="email" placeholder="Enter email..." className="form-control"/>
-                  <input ref="password" type="password" name="password" placeholder="Enter password..." className="form-control" />
-                  <input ref="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password..." className="form-control" />
+                <form className="col-sm-8 col-center">
+                  <input className="form-control margin-bottom" ref="email" type="text" placeholder="Enter email..." />
+                  <input className="form-control margin-bottom" ref="password" type="password" placeholder="Enter password..." />
+                  <input className="form-control margin-bottom" ref="confirmPassword" type="password" placeholder="Confirm password..." />
                 </form>
-                <button
-                  onClick={this.onSubmit.bind(this)}
-                  className="btn btn-raised btn-default">
-                  Create Account
-                </button>
+
+                <div className="row">
+                  <div className="col-sm-6">
+                    <button
+                      onClick={this.goBack.bind(this)}
+                      className="btn btn-raised btn-danger btn-block">
+                      CANCEL
+                    </button>
+                  </div>
+                  <div className="col-sm-6">
+                    <button
+                      onClick={this.onSubmit.bind(this)}
+                      className="btn btn-raised btn-default btn-block">
+                      CREATE ACCOUNT
+                    </button>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
