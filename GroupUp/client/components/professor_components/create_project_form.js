@@ -105,22 +105,23 @@ export default class CreateProjectForm extends Component {
                     </button>
                   </div>
 
-                  <hr />
-
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <button
-                        //onClick={this.onSubmit.bind(this)}
-                        className="btn btn-raised btn-danger btn-block">
-                        CANCEL
-                      </button>
-                    </div>
-                    <div className="col-sm-6">
-                      <button
-                        onClick={this.createGroup.bind(this)}
-                        className="btn btn-raised btn-default btn-block">
-                        CREATE GROUP
-                      </button>
+                  <div className="form-group">
+                    <hr />
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <button
+                          //onClick={this.onSubmit.bind(this)}
+                          className="btn btn-raised btn-danger btn-block">
+                          CANCEL
+                        </button>
+                      </div>
+                      <div className="col-sm-6">
+                        <button
+                          onClick={this.createGroup.bind(this)}
+                          className="btn btn-raised btn-default btn-block">
+                          CREATE GROUP
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>
