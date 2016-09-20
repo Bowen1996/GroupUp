@@ -66,6 +66,16 @@ export default class UserLogin extends Component {
 
               <div className="panel-body">
                 <form className="col-sm-8 col-center">
+                  <div className="col-sm-8 col-center">
+                    <div className="form-group">
+                      <img src="http://gazettereview.com/wp-content/uploads/2016/03/facebook-avatar.jpg" className="img-rounded img-responsive col-center" />
+                      <button
+                        //onClick={this.onSubmit.bind(this)}
+                        className="btn btn-raised btn-default btn-block">
+                        UPLOAD PROFILE PICTURE
+                      </button>
+                    </div>
+                  </div>
                   <div className="form-group">
                     <input className="form-control" ref="email" type="text" placeholder="Enter email..." />
                   </div>
