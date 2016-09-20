@@ -26,11 +26,14 @@ export default class UserLogin extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-6">
-            <h1>Login</h1>
-
+            <h3>Login</h3>
             <form>
-              <input ref="email" type="text" name="email" placeholder="Enter email..." className="form-control"/>
-              <input ref="password" type="password" name="password" placeholder="Enter password..." className="form-control" />
+              <div className="form-group">
+                <input ref="email" type="text" name="email" placeholder="Enter email..." className="form-control"/>
+              </div>
+              <div className="form-group">
+                <input ref="password" type="password" name="password" placeholder="Enter password..." className="form-control" />
+              </div>
             </form>
             <button
               onClick={this.onSubmit.bind(this)}

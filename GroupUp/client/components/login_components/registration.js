@@ -23,7 +23,7 @@ export default class UserLogin extends Component {
       };
       Accounts.createUser(accountInfo, (error) => {
         if(error) {
-          console.log("Error");
+          console.log(error);
         } else {
           Meteor.loginWithPassword(email, password, (error) => {
             if(error) {
@@ -40,23 +40,72 @@ export default class UserLogin extends Component {
     }
   }
 
+  goBack(event) {
+    event.preventDefault();
+
+    browserHistory.push('/');
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
           <div className="col-sm-6">
-            <h1>Create a {this.props.params.userType} account:</h1>
-
-            <form>
-              <input ref="email" type="text" name="email" placeholder="Enter email..." className="form-control"/>
-              <input ref="password" type="password" name="password" placeholder="Enter password..." className="form-control" />
-              <input ref="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password..." className="form-control" />
-            </form>
-            <button
-              onClick={this.onSubmit.bind(this)}
+            <button onClick={this.goBack.bind(this)}
               className="btn btn-raised btn-default">
-              Create Account
-            </button>
+              &larr; Back</button>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3>Create a {this.props.params.userType} account:</h3>
+              </div>
+
+              <div className="panel-body">
+                <form className="col-sm-8 col-center">
+                  <div className="col-sm-8 col-center">
+                    <div className="form-group">
+                      <img src="/images/facebook-avatar.jpg" className="img-rounded img-responsive col-center" />
+                      <button
+                        //onClick={this.onSubmit.bind(this)}
+                        className="btn btn-raised btn-default btn-block">
+                        UPLOAD PROFILE PICTURE
+                      </button>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <input className="form-control" ref="email" type="text" placeholder="Enter email..." />
+                  </div>
+                  <div className="form-group">
+                    <input className="form-control" ref="password" type="password" placeholder="Enter password..." />
+                  </div>
+                  <div className="form-group margin-bottom">
+                    <input className="form-control" ref="confirmPassword" type="password" placeholder="Confirm password..." />
+                  </div>
+                </form>
+
+                <div className="row">
+                  <div className="col-sm-6">
+                    <button
+                      onClick={this.goBack.bind(this)}
+                      className="btn btn-raised btn-danger btn-block">
+                      CANCEL
+                    </button>
+                  </div>
+                  <div className="col-sm-6">
+                    <button
+                      onClick={this.onSubmit.bind(this)}
+                      className="btn btn-raised btn-default btn-block">
+                      CREATE ACCOUNT
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>

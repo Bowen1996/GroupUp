@@ -16,16 +16,36 @@ export default class Splash extends Component {
 
   render() {
     return (
-      <div className="height-50">
-        <div className="row vertical-center">
-          <div className="col-sm-6">
-            <UserLogin />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 col-center">
+            <h1 className="main-title">GroupUp</h1>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-8 col-sm-12">
+            <div className="panel panel-default height-50-percent">
+              <div className="panel-heading">
+                <h3>Already a user?</h3>
+              </div>
+              <div className="panel-body">
+                <UserLogin />
+              </div>
+            </div>
           </div>
 
-          <div className="col-sm-6">
-            <button className="btn btn-raised btn-default" onClick={this.createStudentAccount.bind(this)}>Create Student Account</button>
-            <br />
-            <button className="btn btn-raised btn-default" onClick={this.createProfessorAccount.bind(this)}>Create Professor Account</button>
+          <div className="col-md-4 col-sm-12">
+            <div className="panel panel-default height-50-percent">
+              <div className="panel-heading">
+                <h3>Want to create an account?</h3>
+              </div>
+              <div className="panel-body">
+                <button className="btn btn-raised btn-block btn-default" onClick={this.createStudentAccount.bind(this)}>Create Student Account</button>
+                <br />
+                <button className="btn btn-raised btn-block btn-default" onClick={this.createProfessorAccount.bind(this)}>Create Professor Account</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

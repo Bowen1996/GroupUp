@@ -7,7 +7,9 @@ export default (props) => {
   return (
     <div>
       <Header />
-      {props.children}
+      <div className="background-default padding-default">
+        {props.children}
+      </div>
     </div>
   );
 };
