@@ -60,15 +60,21 @@ export default class UserLogin extends Component {
         <div className="row">
           <div className="col-sm-12">
             <div className="panel panel-default">
-              <div className="panel-heading margin-bottom">
+              <div className="panel-heading">
                 <h3>Create a {this.props.params.userType} account:</h3>
               </div>
 
               <div className="panel-body">
                 <form className="col-sm-8 col-center">
-                  <input className="form-control margin-bottom" ref="email" type="text" placeholder="Enter email..." />
-                  <input className="form-control margin-bottom" ref="password" type="password" placeholder="Enter password..." />
-                  <input className="form-control margin-bottom" ref="confirmPassword" type="password" placeholder="Confirm password..." />
+                  <div className="form-group">
+                    <input className="form-control" ref="email" type="text" placeholder="Enter email..." />
+                  </div>
+                  <div className="form-group">
+                    <input className="form-control" ref="password" type="password" placeholder="Enter password..." />
+                  </div>
+                  <div className="form-group margin-bottom">
+                    <input className="form-control" ref="confirmPassword" type="password" placeholder="Confirm password..." />
+                  </div>
                 </form>
 
                 <div className="row">

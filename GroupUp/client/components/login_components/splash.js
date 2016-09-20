@@ -16,7 +16,7 @@ export default class Splash extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div className="row">
           <div className="col-md-8 col-sm-12">
             <div className="panel panel-default height-50-percent">
