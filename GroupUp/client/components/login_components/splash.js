@@ -20,8 +20,8 @@ export default class Splash extends Component {
         <div className="row">
           <div className="col-md-8 col-sm-12">
             <div className="panel panel-default height-50-percent">
-              <div className="panel-heading text-center">
-                Already a user?
+              <div className="panel-heading">
+                <h3>Already a user?</h3>
               </div>
               <div className="panel-body">
                 <UserLogin />
@@ -31,8 +31,8 @@ export default class Splash extends Component {
 
           <div className="col-md-4 col-sm-12">
             <div className="panel panel-default height-50-percent">
-              <div className="panel-heading text-center">
-                Want to create an account?
+              <div className="panel-heading">
+                <h3>Want to create an account?</h3>
               </div>
               <div className="panel-body">
                 <button className="btn btn-raised btn-block btn-default" onClick={this.createStudentAccount.bind(this)}>Create Student Account</button>

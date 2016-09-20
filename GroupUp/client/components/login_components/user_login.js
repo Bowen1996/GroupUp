@@ -26,7 +26,7 @@ export default class UserLogin extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-6">
-            <h1>Login</h1>
+            <h3>Login</h3>
             <form>
               <div className="form-group">
                 <input ref="email" type="text" name="email" placeholder="Enter email..." className="form-control"/>
