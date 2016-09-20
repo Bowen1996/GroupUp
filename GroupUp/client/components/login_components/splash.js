@@ -18,6 +18,12 @@ export default class Splash extends Component {
     return (
       <div className="container">
         <div className="row">
+          <div className="col-md-6 col-center">
+            <h1 className="main-title">GroupUp</h1>
+          </div>
+        </div>
+
+        <div className="row">
           <div className="col-md-8 col-sm-12">
             <div className="panel panel-default height-50-percent">
               <div className="panel-heading">
