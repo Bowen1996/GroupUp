@@ -19,7 +19,7 @@ export default class Splash extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-6 col-center">
-            <h1 className="main-title">GroupUp</h1>
+            <img className="main-title" src="/images/GroupUpIcon.png" />
           </div>
         </div>
 

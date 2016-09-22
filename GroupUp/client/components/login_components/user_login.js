@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, browserHistory } from 'react-router';
 
 export default class UserLogin extends Component {
   onSubmit(event) {
@@ -13,7 +14,7 @@ export default class UserLogin extends Component {
           console.log("Could not log in");
         } else {
           //Re-direct them to a page
-          console.log("Success!");
+          browserHistory.push('/professor-dashboard/');
         }
       });
     } else {
