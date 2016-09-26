@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { browserHistory } from 'react-router';
 
 export default class CreateProjectForm extends Component {
   addSkill() {
@@ -10,7 +11,7 @@ export default class CreateProjectForm extends Component {
   }
 
   createGroup() {
-
+    browserHistory.push('/confirmation-create-project');
   }
 
   render() {

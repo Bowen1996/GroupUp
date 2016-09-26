@@ -30,7 +30,7 @@ export default class UserLogin extends Component {
               console.log("Could not log in");
             } else {
               //Re-direct them to a page
-              browserHistory.push('/confirmation/');
+              browserHistory.push('/confirmation-account');
             }
           });
         }
