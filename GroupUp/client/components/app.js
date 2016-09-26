@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from './header';
 
-import Confirmation from './utility_components/confirmation';
+import Confirmation from './utility/confirmation';
 
 export default (props) => {
   return (
