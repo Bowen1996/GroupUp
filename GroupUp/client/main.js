@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 import App from './components/app';
-import Splash from './components/login_components/splash';
-import Registration from './components/login_components/registration';
-import ConfirmationAccount from './components/utility_components/confirmation_account';
-import ConfirmationCreateProject from './components/utility_components/confirmation_create_project';
-import CreateProjectForm from './components/professor_components/create_project_form';
-import ProfessorDashboard from './components/professor_components/professor_dashboard';
+import Splash from './components/login/splash';
+import Registration from './components/login/registration';
+import ConfirmationAccount from './components/utility/confirmation_account';
+import ConfirmationCreateProject from './components/utility/confirmation_create_project';
+import CreateProjectForm from './components/professor/create_project_form';
+import ProfessorDashboard from './components/professor/professor_dashboard';
 
 const routes = (
   <Router history={browserHistory}>
