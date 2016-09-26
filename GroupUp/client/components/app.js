@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from './header';
 
-import Splash from "./login_components/splash";
+import Confirmation from './utility_components/confirmation';
 
 export default (props) => {
   return (
