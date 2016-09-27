@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
+import { Link, browserHistory } from 'react-router';
+import Card from '../utility/card';
 
 export default class ProfessorDashboard extends Component {
-  goToCreateProjectForm() {
-    browserHistory.push('/create-project')
-  }
-
   render() {
     return(
       <div className="container">
@@ -17,25 +15,31 @@ export default class ProfessorDashboard extends Component {
               </div>
               <div className="panel-body">
                 <h4>
-                  Welcome! GroupUp is a tool for students to create groups for class projects. 
+                  Welcome! GroupUp is a tool for students to create groups for class projects.
                   Click below to create a class project, set a group formation deadline, and import students.
                 </h4>
 
                 <div className="row">
                   <div className="col-md-8 col-center">
-                      <button
-                        onClick={this.goToCreateProjectForm.bind(this)}
-                        className="btn btn-raised btn-block">
-                        New Class Project
-                      </button>
+                      <Link to="/create-project">
+                        <button
+                          className="btn btn-default btn-raised btn-block">
+                          New Class Project
+                        </button>
+                      </Link>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
-        
+
+        <div className="margin-bottom"></div>
+
+        <div className="row">
+          <Card title="Project #1" message="A note about the project" link="/" buttonText="Project Settings"/>
+        </div>
+
       </div>
     );
   }

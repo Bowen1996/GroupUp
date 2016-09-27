@@ -7,7 +7,7 @@ export default class ConfirmationAccount extends Component {
       <Confirmation
         title="Your GroupUp profile is set up!"
         message="Now you are ready to start using GroupUp!"
-        nextLink="/professor-dashboard"
+        link="/professor-dashboard"
         />
     );
   }

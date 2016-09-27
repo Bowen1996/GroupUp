@@ -7,7 +7,7 @@ export default class ConfirmationCreateProject extends Component {
       <Confirmation
         title="You just created a new project!"
         message="Click continue to see your project main page."
-        nextLink="/"
+        link="/"
         />
     );
   }

@@ -8,6 +8,10 @@
   align-items: center;
 }
 
+.float-right {
+  float: right;
+}
+
 .padding-default {
   padding: 20px;
 }
@@ -51,6 +55,10 @@
 }
 
 //Fix some bootstrap issues
+a, a:hover, a:focus {
+  text-decoration: none;
+}
+
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -58,4 +66,9 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 .panel-heading {
   text-align: center;
+}
+
+.no-link-style, .no-link-style:hover {
+  color: #333333;
+  text-decoration: none;
 }

@@ -21,7 +21,7 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 react-meteor-data
 accounts-password
 accounts-ui-unstyled
-meteortoys:allthings
 less
 twbs:bootstrap
 fezvrasta:bootstrap-material-design
+meteortoys:allthings

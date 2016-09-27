@@ -1,9 +1,25 @@
 import React, {Component} from 'react';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
+import SkillsList from './skills_list';
 
 export default class CreateProjectForm extends Component {
-  addSkill() {
+  constructor(props) {
+    super(props);
+    this.state = { skills: [] };
+  }
 
+  addSkill(e) {
+    e.preventDefault();
+    const allSkills = this.state.skills.concat([{text: this.refs.relevantSkills.value, id: Date.now() }]);
+    this.refs.relevantSkills.value = '';
+    this.setState({ skills: allSkills });
+  }
+
+  removeSkill(id) {
+    const allSkills = this.state.skills;
+    const index = allSkills.map((x) => {return x.id;}).indexOf(id);
+    allSkills.splice(index, 1);
+    this.setState({ skills: allSkills });
   }
 
   uploadCSV() {
@@ -20,7 +36,12 @@ export default class CreateProjectForm extends Component {
 
         <div className="row">
           <div className="col-sm-6">
-            <button className="btn btn-raised btn-default">&larr; Back</button>
+            <Link to="/professor-dashboard">
+              <button
+                className="btn btn-raised btn-default">
+                &larr; Back
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -62,13 +83,13 @@ export default class CreateProjectForm extends Component {
                   <label>Acceptable # of Teammates:</label>
                   <div className="row">
                     <div className="col-sm-5">
-                      <input className="form-control" ref="teammates-min" placeholder="Min teammates..."  />
+                      <input className="form-control" ref="teammatesMin" placeholder="Min teammates..."  />
                     </div>
                     <div className="col-sm-2">
                       <span>to</span>
                     </div>
                     <div className="col-sm-5">
-                      <input className="form-control" ref="teammates-max" placeholder="Max teammates..."  />
+                      <input className="form-control" ref="teammatesMax" placeholder="Max teammates..."  />
                     </div>
                   </div>
                   </div>
@@ -77,19 +98,24 @@ export default class CreateProjectForm extends Component {
                     <label>Relevant Skills Each Team Should Have:</label>
                     <p>Add some skills that would help students in this project. When joining this project, students will be able to check off which of these skills they have, to better balance teams.</p>
                     <div className="row">
-                      <div className="col-sm-8">
-                        <input className="form-control" ref="relevant skills" placeholder="Skill name..."  />
+                      <div className="col-sm-10">
+                        <input className="form-control" ref="relevantSkills" placeholder="Skill name..."  />
                       </div>
-                      <div className="col-sm-4">
+                      <div className="col-sm-2">
                         <button
                           onClick={this.addSkill.bind(this)}
-                          className="btn btn-raised btn-default">
+                          className="btn btn-raised btn-default float-right">
                           Add
                         </button>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-sm-12">
+                        <SkillsList
+                          ref="skillsList"
+                          skills={ this.state.skills }
+                          removeSkill={ this.removeSkill.bind(this) }
+                        />
                         {/*Add in a title and a button for each skill. See tutorial.*/}
                       </div>
                     </div>
