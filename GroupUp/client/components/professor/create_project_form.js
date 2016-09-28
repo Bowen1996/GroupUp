@@ -136,11 +136,12 @@ export default class CreateProjectForm extends Component {
                     <hr />
                     <div className="row">
                       <div className="col-sm-6">
-                        <button
-                          //onClick={this.onSubmit.bind(this)}
-                          className="btn btn-raised btn-danger btn-block">
-                          CANCEL
-                        </button>
+                        <Link to="/professor-dashboard">
+                          <button
+                            className="btn btn-raised btn-danger btn-block">
+                            CANCEL
+                          </button>
+                        </Link>
                       </div>
                       <div className="col-sm-6">
                         <button
