@@ -2,14 +2,30 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { Accounts } from 'meteor/accounts-base';
 
+import WarningMessage from '../utility/warning_message';
+
 let profileImage = null;
+const MAX_SIZE = 3000000;
 
 export default class UserLogin extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { warning: false };
+  }
+
   uploadImage(e) {
-    this.refs.profileImagePreview.src = "/images/loading.gif";
     const file = e.target.files[0];
     if (!file) return;
+    if (file.size > MAX_SIZE) {
+      this.setState({ warning: true });
+      return;
+    } else {
+      if (this.state.warning) {
+        this.setState({ warning: false });
+      }
+    }
 
+    this.refs.profileImagePreview.src = "/images/loading.gif";
     const reader = new FileReader();
     reader.onload = function(e) {
       profileImage = new Uint8Array(reader.result);
@@ -88,7 +104,10 @@ export default class UserLogin extends Component {
                     <div className="form-group">
                       <img ref="profileImagePreview" src="/images/facebook-avatar.jpg" className="img-rounded img-responsive col-center" />
                     </div>
-                    <input onChange={this.uploadImage.bind(this)} type="file" name="Upload Profile Picture (Optional)" accept="image/*" />
+                    <label className="btn btn-raised btn-block btn-file">
+                      Upload Profile Image <input onChange={this.uploadImage.bind(this)} className="display-none" type="file" name="imgFile" accept="image/png, image/jpeg, image/gif" />
+                    </label>
+                    { this.state.warning ? <WarningMessage message="Image size is too large. Please use an image < 3mb" /> : null }
 
                   </div>
                   <div className="form-group">

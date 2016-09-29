@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Link, browserHistory } from 'react-router';
 import SkillsList from './skills_list';
 
+let studentCSV = null;
+
 export default class CreateProjectForm extends Component {
   constructor(props) {
     super(props);
@@ -22,22 +24,33 @@ export default class CreateProjectForm extends Component {
     this.setState({ skills: allSkills });
   }
 
-  uploadCSV() {
-    return ["email1@sample.com", "email2@sample.com"];
+  uploadCSV(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      Meteor.call('parseCSV', reader.result, function(e, result) {
+        studentCSV = result;
+        console.log(studentCSV);
+      });
+    }
+    reader.readAsText(file);
   }
 
   createGroup(e) {
     e.preventDefault();
+    this.emails = studentCSV;
     //TODO map though the skills and pulling the text
     Meteor.call('projects.insert', {
-      "professor": Meteor.userId(),
-      "name": this.refs.name.value,
-      "description": this.refs.description.value,
-      "deadline": this.refs.deadline.value,
-      "min_teammates": this.refs.teammatesMax.value,
-      "max_teammates": this.refs.teammatesMin.value,
-      "skills": this.state.skills,
-      "student_emails": this.uploadCSV(),
+      professor: Meteor.userId(),
+      name: this.refs.name.value,
+      description: this.refs.description.value,
+      deadline: this.refs.deadline.value,
+      min_teammates: this.refs.teammatesMin.value,
+      max_teammates: this.refs.teammatesMax.value,
+      skills: this.state.skills,
+      student_emails: studentCSV,
     });
     browserHistory.push('/confirmation-create-project');
   }
@@ -137,12 +150,8 @@ export default class CreateProjectForm extends Component {
                     <label>Import Students Into Project (optional):</label>
                     <p>Create a CSV file with a single column containing the email addresses of students who will be allowed to use this website. In excel, you can save a spreadsheet as a CSV.</p>
                     <p>You can skip this step and manually add student emails, or upload the CSV later.</p>
-                    <button
-                      onClick={this.uploadCSV.bind(this)}
-                      className="btn btn-raised btn-default">
-                      Upload CSV File
-                    </button>
                   </div>
+                  <input onChange={this.uploadCSV.bind(this)} type="file" accept=".csv" />
 
                   <div className="form-group">
                     <hr />
