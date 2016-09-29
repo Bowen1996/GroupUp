@@ -2,9 +2,26 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { Accounts } from 'meteor/accounts-base';
 
+let profileImage = null;
+
 export default class UserLogin extends Component {
+  uploadImage(e) {
+    this.refs.profileImagePreview.src = "/images/loading.gif";
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      profileImage = new Uint8Array(reader.result);
+
+      Meteor.call('convertImage', profileImage, function(e, result) {
+        this.refs.profileImagePreview.src = 'data:image/png;base64,' + result;
+      }.bind(this));
+    }.bind(this);
+    reader.readAsArrayBuffer(file);
+  }
+
   onSubmit(event) {
-    //Uncomment logic below for actual authentication and user creation
     event.preventDefault();
 
     const email = this.refs.email.value;
@@ -19,6 +36,7 @@ export default class UserLogin extends Component {
         password: password,
         profile: {
           isProfessor: isProfessor,
+          image: profileImage,
         }
       };
       Accounts.createUser(accountInfo, (error) => {
@@ -68,13 +86,10 @@ export default class UserLogin extends Component {
                 <form className="col-sm-8 col-center">
                   <div className="col-sm-8 col-center">
                     <div className="form-group">
-                      <img src="/images/facebook-avatar.jpg" className="img-rounded img-responsive col-center" />
-                      <button
-                        //onClick={this.onSubmit.bind(this)}
-                        className="btn btn-raised btn-default btn-block">
-                        UPLOAD PROFILE PICTURE
-                      </button>
+                      <img ref="profileImagePreview" src="/images/facebook-avatar.jpg" className="img-rounded img-responsive col-center" />
                     </div>
+                    <input onChange={this.uploadImage.bind(this)} type="file" name="Upload Profile Picture (Optional)" accept="image/*" />
+
                   </div>
                   <div className="form-group">
                     <input className="form-control" ref="email" type="text" placeholder="Enter email..." />
@@ -103,7 +118,6 @@ export default class UserLogin extends Component {
                     </button>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

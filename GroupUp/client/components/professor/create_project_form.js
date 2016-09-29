@@ -23,10 +23,22 @@ export default class CreateProjectForm extends Component {
   }
 
   uploadCSV() {
-
+    return ["email1@sample.com", "email2@sample.com"];
   }
 
-  createGroup() {
+  createGroup(e) {
+    e.preventDefault();
+    //TODO map though the skills and pulling the text
+    Meteor.call('projects.insert', {
+      "professor": Meteor.userId(),
+      "name": this.refs.name.value,
+      "description": this.refs.description.value,
+      "deadline": this.refs.deadline.value,
+      "min_teammates": this.refs.teammatesMax.value,
+      "max_teammates": this.refs.teammatesMin.value,
+      "skills": this.state.skills,
+      "student_emails": this.uploadCSV(),
+    });
     browserHistory.push('/confirmation-create-project');
   }
 

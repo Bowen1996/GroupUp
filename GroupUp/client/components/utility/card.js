@@ -10,12 +10,10 @@ export default class Card extends Component {
             <div className="panel-body">
               <h3 className="margin-bottom text-center">{this.props.title}</h3>
               <h4 className="margin-bottom text-center">{this.props.message}</h4>
-              <Link to={this.props.link}>
                 <button
                   className="btn btn-raised btn-default btn-block">
                   {this.props.buttonText}
                 </button>
-              </Link>
             </div>
           </div>
         </Link>

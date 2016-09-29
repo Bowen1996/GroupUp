@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 import { Link, browserHistory } from 'react-router';
 import Card from '../utility/card';
 
-export default class ProfessorDashboard extends Component {
+import { Projects } from '../../../imports/collections/projects';
+
+class ProfessorDashboard extends Component {
   render() {
     return(
       <div className="container">
@@ -37,11 +40,18 @@ export default class ProfessorDashboard extends Component {
         <div className="margin-bottom"></div>
 
         <div className="row">
-          <Card title="Project #1" message="A note about the project" link="/" buttonText="Project Settings"/>
+          {this.props.projects.map(project =>
+            <Card key={project._id} title={project.name} message={project.description} link="/" buttonText="Project Settings"/>
+          )}
         </div>
 
       </div>
     );
   }
-
 }
+
+
+export default createContainer(() => {
+  Meteor.subscribe('projects', 5);
+  return { projects: Projects.find({}).fetch() };
+}, ProfessorDashboard);
