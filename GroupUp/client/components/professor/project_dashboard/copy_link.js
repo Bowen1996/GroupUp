@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
+import copy from 'copy-to-clipboard';
 
 import ButtonDanger from '../../utility/button_danger';
+import AlertConfirmation from '../../utility/alert_confirmation';
 
 export default class CopyLink extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { copied: false };
+  }
+  copyLink(e) {
+    e.preventDefault();
+    copy("Visit: groupup.com/project/example78999. Create an account, and click on the project named example.");
+    this.setState({ copied: true });
+  }
   render() {
     return (
       <div className="panel panel-default">
@@ -15,7 +26,7 @@ export default class CopyLink extends Component {
           <p>
             Student Instructions:
           </p>
-          <ol className="margin-bottom">
+          <ol ref="instructions" className="margin-bottom">
             <li>
               Visit groupup.com/project/example78999.
             </li>
@@ -25,15 +36,10 @@ export default class CopyLink extends Component {
             <li>
               Click on the project named "example".
             </li>
-            <li>
-              Fill out the "About Me" form so that other students can know more about you.
-            </li>
-            <li>
-              See groups that other students have proposed, or create your own!
-            </li>
           </ol>
           <div className="col-sm-8 col-center">
-            <ButtonDanger link="" text="Copy Link & Instructions" />
+            <ButtonDanger onClick={this.copyLink.bind(this)} text="Copy Link & Instructions" />
+            { this.state.copied ? <AlertConfirmation message="Link copied to clipboard" /> : null }
           </div>
         </div>
       </div>

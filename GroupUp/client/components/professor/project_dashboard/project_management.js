@@ -13,9 +13,9 @@ export default class ProjectManagement extends Component {
         </div>
         <div className="panel-body">
           <div className="col-sm-8 col-center">
-            <ButtonDanger link="" text="Randomly Group Students Now" />
-            <Button link="" text="Add or Remove Students From Project" />
-            <Button link="" text="Manually Group Students" />
+            <ButtonDanger onClick="" text="Randomly Group Students Now" />
+            <Button onClick="" text="Add or Remove Students From Project" />
+            <Button onClick="" text="Manually Group Students" />
           </div>
         </div>
       </div>

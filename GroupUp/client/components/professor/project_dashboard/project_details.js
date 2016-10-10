@@ -12,7 +12,7 @@ export default class ProjectDetails extends Component {
         </div>
         <div className="panel-body">
           <div className="col-sm-10 col-center">
-            <Button link="" text="Edit Project Settings" />
+            <Button onClick="" text="Edit Project Settings" />
             <hr />
             <h4>Description:</h4>
             <p>this.props.project.description</p>
