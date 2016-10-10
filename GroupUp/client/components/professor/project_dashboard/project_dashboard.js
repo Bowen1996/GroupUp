@@ -6,11 +6,6 @@ import CopyLink from './copy_link';
 import ProjectDetails from './project_details';
 import ProjectManagement from './project_management';
 import ProjectStats from './project_stats';
-/*
-<CopyLink link={}/>
-<ProjectStats groups={}/>
-<ProjectDetails project={}/>
-*/
 
 export default class ProjectDashboard extends Component {
   render() {

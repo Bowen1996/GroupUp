@@ -39,7 +39,7 @@ export default class CopyLink extends Component {
           </ol>
           <div className="col-sm-8 col-center">
             <ButtonDanger onClick={this.copyLink.bind(this)} text="Copy Link & Instructions" />
-            { this.state.copied ? <AlertConfirmation message="Link copied to clipboard" /> : null }
+            { this.state.copied ? <AlertConfirmation message="Link copied to clipboard. Paste in email to students." /> : null }
           </div>
         </div>
       </div>

@@ -4,7 +4,6 @@ import { Accounts } from 'meteor/accounts-base';
 
 import WarningMessage from '../utility/warning_message';
 
-let profileImage = null;
 const MAX_SIZE = 3000000;
 
 export default class UserLogin extends Component {
@@ -13,7 +12,34 @@ export default class UserLogin extends Component {
     this.state = { warning: false };
   }
 
-  uploadImage(e) {
+  componentWillMount(){
+    // we create this rule both on client and server
+    Slingshot.fileRestrictions("avatar", {
+      allowedFileTypes: ["image/png", "image/jpeg", "image/gif"],
+      maxSize: 10 * 500 * 500
+    });
+  }
+
+  uploadImage() {
+    if(this.refs.image.files[0] == null) {
+      return "/images/facebook-avatar.jpg";
+    }
+    var userId = Meteor.user()._id;
+    var metaContext = {avatarId: userId};
+    var uploader = new Slingshot.Upload("UsersAvatar", metaContext);
+    uploader.send(this.refs.image.files[0], function (error, downloadUrl) {
+      if (error) {
+        console.error('Error uploading', uploader.xhr.response);
+        alert (error);
+      }
+      else {
+        //Update user
+        Meteor.call('updateUserImage', Meteor.userId(), downloadUrl);
+      }
+    }.bind(this));
+  }
+
+  selectImage(e) {
     const file = e.target.files[0];
     if (!file) return;
     if (file.size > MAX_SIZE) {
@@ -27,14 +53,11 @@ export default class UserLogin extends Component {
 
     this.refs.profileImagePreview.src = "/images/loading.gif";
     const reader = new FileReader();
-    reader.onload = function(e) {
-      profileImage = new Uint8Array(reader.result);
-
-      Meteor.call('convertImage', profileImage, function(e, result) {
-        this.refs.profileImagePreview.src = 'data:image/png;base64,' + result;
-      }.bind(this));
-    }.bind(this);
-    reader.readAsArrayBuffer(file);
+    reader.onload = function (e) {
+      const uploadedImage = e.target.result;
+      this.refs.profileImagePreview.src = uploadedImage;
+    }.bind(this)
+    reader.readAsDataURL(file);
   }
 
   onSubmit(event) {
@@ -52,23 +75,22 @@ export default class UserLogin extends Component {
         password: password,
         profile: {
           isProfessor: isProfessor,
-          image: profileImage,
         }
       };
-      Accounts.createUser(accountInfo, (error) => {
-        if(error) {
-          console.log(error);
+      Accounts.createUser(accountInfo, function(e) {
+        if(e) {
+          console.log(e);
         } else {
-          Meteor.loginWithPassword(email, password, (error) => {
-            if(error) {
-              console.log("Could not log in");
+          Meteor.loginWithPassword(email, password, function(e) {
+            if(e) {
+              console.log(e);
             } else {
-              //Re-direct them to a page
+              this.uploadImage();
               browserHistory.push('/confirmation-account');
             }
-          });
+          }.bind(this));
         }
-      });
+      }.bind(this));
     } else {
         console.log("Not equal");
     }
@@ -105,7 +127,7 @@ export default class UserLogin extends Component {
                       <img ref="profileImagePreview" src="/images/facebook-avatar.jpg" className="img-rounded img-responsive col-center" />
                     </div>
                     <label className="btn btn-raised btn-block btn-file">
-                      Upload Profile Image <input onChange={this.uploadImage.bind(this)} className="display-none" type="file" name="imgFile" accept="image/png, image/jpeg, image/gif" />
+                      Upload Profile Image <input ref="image" onChange={this.selectImage.bind(this)} className="display-none" type="file" name="imgFile" accept="image/png, image/jpeg, image/gif" />
                     </label>
                     { this.state.warning ? <WarningMessage message="Image size is too large. Please use an image < 3mb" /> : null }
 
