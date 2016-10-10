@@ -25,12 +25,14 @@ export default class UserLogin extends Component {
       }
     }
 
+    profileImage = file.name;
+
     this.refs.profileImagePreview.src = "/images/loading.gif";
     const reader = new FileReader();
     reader.onload = function(e) {
-      profileImage = new Uint8Array(reader.result);
+      let image = new Uint8Array(reader.result);
 
-      Meteor.call('convertImage', profileImage, function(e, result) {
+      Meteor.call('convertImage', image, function(e, result) {
         this.refs.profileImagePreview.src = 'data:image/png;base64,' + result;
       }.bind(this));
     }.bind(this);
