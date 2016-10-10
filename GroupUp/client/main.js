@@ -8,7 +8,9 @@ import Registration from './components/login/registration';
 import ConfirmationAccount from './components/utility/confirmation_account';
 import ConfirmationCreateProject from './components/utility/confirmation_create_project';
 import CreateProjectForm from './components/professor/create_project_form';
+
 import ProfessorDashboard from './components/professor/professor_dashboard';
+import ProjectDashboard from './components/professor/project_dashboard/project_dashboard.js';
 
 const routes = (
   <Router history={browserHistory}>
@@ -19,6 +21,7 @@ const routes = (
       <Route path="confirmation-create-project" component={ConfirmationCreateProject} />
       <Route path="create-project" component={CreateProjectForm} />
       <Route path="professor-dashboard" component={ProfessorDashboard} />
+      <Route path="project-dashboard/:projectId" component={ProjectDashboard} />
     </Route>
   </Router>
 );
