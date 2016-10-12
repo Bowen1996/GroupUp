@@ -4,12 +4,8 @@ import { getGroupStats } from './GroupStats/GroupStatHelpers.js';
 
 Meteor.startup(() => {
   Meteor.methods({
-    'convertImage'(buffer) {
-      var btoa = require('btoa');
-      var binstr = Array.prototype.map.call(buffer, function (ch) {
-          return String.fromCharCode(ch);
-      }).join('');
-      return btoa(binstr);
+    'updateUserImage'(userId, image) {
+      Meteor.users.update(userId, {$set: {"profile.image": image}});
     },
 
     'parseCSV'(csvFile) {
