@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Projects } from '../imports/collections/projects.js';
+import { getGroupStats } from './GroupStats/GroupStatHelpers.js';
 
 Meteor.startup(() => {
   Meteor.methods({
@@ -17,7 +18,7 @@ Meteor.startup(() => {
     },
 
     'getGroupStats'(projectId) {
-      return null;
+      return getGroupStats(projectId);
     },
   });
 
