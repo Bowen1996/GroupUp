@@ -17,8 +17,27 @@ Meteor.methods({
       min_teammates: data.min_teammates,
       max_teammates: data.max_teammates,
       skills: data.skills,
-      ungrouped: data.student_emails,
-      groups: [],
+      ungrouped: data.ungrouped,
+      groups: data.groups,
+      csv_name: data.csv_name,
+    });
+  },
+
+  'projects.update'(project_id, data) {
+    Projects.update(project_id, {$set: {
+        professor: data.professor,
+        name: data.name,
+        link: data.link,
+        createdAt: new Date(),
+        description: data.description,
+        deadline: data.deadline,
+        min_teammates: data.min_teammates,
+        max_teammates: data.max_teammates,
+        skills: data.skills,
+        ungrouped: data.ungrouped,
+        groups: data.groups,
+        csv_name: data.csv_name,
+      }
     });
   },
 

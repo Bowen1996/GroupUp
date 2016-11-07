@@ -12,19 +12,21 @@ export default class ProjectDetails extends Component {
         </div>
         <div className="panel-body">
           <div className="col-sm-10 col-center">
-            <Button onClick="" text="Edit Project Settings" />
+            <Link to={"/create-project/" + this.props.project._id}>
+              <Button onClick="" text="Edit Project Settings" />
+            </Link>
             <hr />
             <h4>Description:</h4>
-            <p>this.props.project.description</p>
+            <p>{this.props.project.description}</p>
             <hr />
             <h4>Acceptable Number of Teammates:</h4>
-            <p>this.props.project.minTeammates to this.props.project.maxTeammates</p>
+            <p>{this.props.project.min_teammates} to {this.props.project.max_teammates}</p>
             <hr />
             <h4>Deadline (until random assignment):</h4>
-            <p>this.props.project.deadline</p>
+            <p>{this.props.project.deadline}</p>
             <hr />
             <h4>Current CSV File of Students:</h4>
-            <p>this.props.project.csvName</p>
+            <p>{this.props.project.csv_name}</p>
           </div>
         </div>
       </div>

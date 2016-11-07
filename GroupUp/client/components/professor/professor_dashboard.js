@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link, browserHistory } from 'react-router';
 import Card from '../utility/card';
-
 import { Projects } from '../../../imports/collections/projects';
+
+const NEW_PROJECT_ID = "new-project";
 
 class ProfessorDashboard extends Component {
   render() {
@@ -24,7 +25,7 @@ class ProfessorDashboard extends Component {
 
                 <div className="row">
                   <div className="col-md-8 col-center">
-                      <Link to="/create-project">
+                      <Link to={"/create-project/" + NEW_PROJECT_ID}>
                         <button
                           className="btn btn-default btn-raised btn-block">
                           New Class Project
@@ -41,7 +42,7 @@ class ProfessorDashboard extends Component {
 
         <div className="row">
           {this.props.projects.map(project =>
-            <Card key={project._id} title={project.name} message={project.description} link="/" buttonText="Project Settings"/>
+            <Card key={project._id} title={project.name} message={project.description} link={"/project-dashboard/" + project._id} buttonText="Project Settings"/>
           )}
         </div>
 

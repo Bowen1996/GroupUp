@@ -12,7 +12,8 @@ export default class CopyLink extends Component {
   }
   copyLink(e) {
     e.preventDefault();
-    copy("Visit: groupup.com/project/example78999. Create an account, and click on the project named example.");
+    const projectId = this.props.projectId;
+    copy("Visit: groupup.com/" + projectId + ". Create an account, and click on the project named example.");
     this.setState({ copied: true });
   }
   render() {
@@ -22,19 +23,19 @@ export default class CopyLink extends Component {
           <h3>Share The Link With Students</h3>
         </div>
         <div className="panel-body">
-          <h3 className="text-center margin-bottom">groupup.com/project/example78999</h3>
+          <h3 className="text-center margin-bottom">groupup.com/{this.props.projectId}</h3>
           <p>
             Student Instructions:
           </p>
           <ol ref="instructions" className="margin-bottom">
             <li>
-              Visit groupup.com/project/example78999.
+              Visit groupup.com/{this.props.projectId}
             </li>
             <li>
-              Create a student account.
+              Create a student account
             </li>
             <li>
-              Click on the project named "example".
+              Click on the project named "{this.props.name}"
             </li>
           </ol>
           <div className="col-sm-8 col-center">
