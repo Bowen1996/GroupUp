@@ -1,13 +1,33 @@
 import React, {Component} from 'react';
 import { Link, browserHistory } from 'react-router';
 import SkillsList from './skills_list';
+import { createContainer } from 'meteor/react-meteor-data';
+import { Projects } from '../../../imports/collections/projects';
+
+const NEW_PROJECT_ID = "new-project";
 
 let studentCSV = null;
+let csvName = "No CSV file uploaded";
 
-export default class CreateProjectForm extends Component {
+class CreateProjectForm extends Component {
   constructor(props) {
     super(props);
     this.state = { skills: [] };
+  }
+
+  // Populate form if the project already exists
+  componentDidMount() {
+    const project = this.props.project;
+    if (this.props.project) {
+      this.refs.name.value = project.name;
+      this.refs.description.value = project.description;
+      this.refs.deadline.value = project.deadline;
+      this.refs.teammatesMin.value = project.min_teammates;
+      this.refs.teammatesMax.value = project.max_teammates;
+      studentCSV = project.ungrouped;
+      csvName = project.csv_name;
+      this.setState({skills: project.skills});
+    }
   }
 
   addSkill(e) {
@@ -28,6 +48,7 @@ export default class CreateProjectForm extends Component {
     const file = e.target.files[0];
     if (!file) return;
 
+    csvName = file.name;
     const reader = new FileReader();
     reader.onload = function(e) {
       Meteor.call('parseCSV', reader.result, function(e, result) {
@@ -38,10 +59,46 @@ export default class CreateProjectForm extends Component {
     reader.readAsText(file);
   }
 
-  createGroup(e) {
+  submitForm(e) {
     e.preventDefault();
+    if (this.props.params.projectId === NEW_PROJECT_ID) {
+      this.createProject();
+    } else {
+      this.updateProject();
+    }
+  }
+
+  updateProject() {
+    Meteor.call('projects.update', this.props.params.projectId, {
+      professor: Meteor.userId(),
+      name: this.refs.name.value,
+      description: this.refs.description.value,
+      deadline: this.refs.deadline.value,
+      min_teammates: this.refs.teammatesMin.value,
+      max_teammates: this.refs.teammatesMax.value,
+      skills: this.state.skills,
+      ungrouped: studentCSV,
+      groups: [
+        {
+          name: "Demo group 1",
+          students: []
+        }, 
+        {
+          name: "Demo group 2",
+          students: []
+        },
+        {
+          name: "Demo group 3",
+          students: []
+        },
+      ],
+      csv_name: csvName,
+    });
+    browserHistory.push('/project-dashboard/' + this.props.params.projectId);
+  }
+
+  createProject() {
     this.emails = studentCSV;
-    //TODO map though the skills and pulling the text
     Meteor.call('projects.insert', {
       professor: Meteor.userId(),
       name: this.refs.name.value,
@@ -50,12 +107,28 @@ export default class CreateProjectForm extends Component {
       min_teammates: this.refs.teammatesMin.value,
       max_teammates: this.refs.teammatesMax.value,
       skills: this.state.skills,
-      student_emails: studentCSV,
+      ungrouped: studentCSV,
+      groups: [
+        {
+          name: "Demo group 1",
+          students: []
+        }, 
+        {
+          name: "Demo group 2",
+          students: []
+        },
+        {
+          name: "Demo group 3",
+          students: []
+        },
+      ],
+      csv_name: csvName,
     });
     browserHistory.push('/confirmation-create-project');
   }
 
   render() {
+    if (!this.props.ready) {return <span>loading...</span>}
     return (
       <div className="container">
 
@@ -166,9 +239,9 @@ export default class CreateProjectForm extends Component {
                       </div>
                       <div className="col-sm-6">
                         <button
-                          onClick={this.createGroup.bind(this)}
+                          onClick={this.submitForm.bind(this)}
                           className="btn btn-raised btn-default btn-block">
-                          CREATE GROUP
+                          { this.props.params.projectId === NEW_PROJECT_ID ? "CREATE PROJECT ": "UPDATE PROJECT" }
                         </button>
                       </div>
                     </div>
@@ -183,3 +256,10 @@ export default class CreateProjectForm extends Component {
     );
   }
 }
+
+export default createContainer((props) => {
+  return {
+    ready: Meteor.subscribe('projectsById', props.params.projectId).ready(),
+    project: Projects.findOne(props.params.projectId)
+  }
+}, CreateProjectForm);

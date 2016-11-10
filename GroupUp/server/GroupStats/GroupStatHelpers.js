@@ -11,14 +11,16 @@ function getProjectById(projectId) {
 
 /**
  * Generates a 1-d array of grouped students for easier parsing
- * @param  {list of list of strings} groups_list [represents groups]
+ * @param  {list of Group objects} groups_list [represents groups]
  * @return {[list of strings]}         [list of all student emails in groups]
  */
 function getAllGroupedStudents(groups_list) {
   let grouped_students = [];
   let curr_group;
+  let curr_emails;
   for (let i = 0; i < groups_list.length; i++) {
     curr_group = groups_list[i];
+    curr_emails = curr_group.student_emails;
     for (let j = 0; j < curr_group.length; j++) {
       grouped_students.push(curr_group[j]);
     }
@@ -48,7 +50,7 @@ function getAllStudents(grouped_students, ungrouped_students) {
  * Classifies groups based on ability to add more students
  * @param  {int} min Smallest number of students allowed in a group
  * @param  {int} max Largest number of students allowed in a group
- * @param  {list of list of strings} groups_list student groups
+ * @param  {list of group objects} groups_list student groups
  * @return {groupClassification} Has 3 properties number of valid, too small
  * and filled groups
  */
@@ -60,8 +62,10 @@ function classifyGroups(min, max, groups_list) {
   };
 
   let curr_group;
+  let curr_emails;
   for (let i = 0; i < groups_list.length; i++) {
     curr_group = groups_list[i];
+    curr_emails = curr_group.student_emails;
     if (curr_group.length < min) {
       groupClassification.too_small.concat(curr_group);
     } else if (curr_group.length == max) {
