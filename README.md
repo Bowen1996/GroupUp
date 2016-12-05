@@ -41,13 +41,18 @@ Group randomization has been implemented, but is not included in this release be
 ###Known Bugs:
 1. When manually grouping students, the page must be refreshed if a new csv file has been uploaded (this is indicated on the page so the user knows what to do).
 2. Manually grouping students currently does not take into account size constraints for the groups (for example, a professor could create a group of 7 students even if the max size is 5).
+
 ##Install Guide
+
 ###Pre-requisites
+
 Must be using one of the following platforms
 1. Mac OS X 10.7 (Lion) and above
 2. Linux on x86 and x86_64 architectures
 3. Windows 7, Windows 8.1, Windows 10, Windows Server 2008, and Windows Server 2012
+
 ###Installation
+
 The following steps will build the GroupUp application while automatically pulling in the dependencies
 1. Install Meteor by following the instructions on the Meteor website (https://www.meteor.com/install)
 
