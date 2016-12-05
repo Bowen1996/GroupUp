@@ -47,6 +47,7 @@ Group randomization has been implemented, but is not included in this release be
 ###Pre-requisites
 
 Must be using one of the following platforms
+
 1. Mac OS X 10.7 (Lion) and above
 2. Linux on x86 and x86_64 architectures
 3. Windows 7, Windows 8.1, Windows 10, Windows Server 2008, and Windows Server 2012
@@ -54,6 +55,7 @@ Must be using one of the following platforms
 ###Installation
 
 The following steps will build the GroupUp application while automatically pulling in the dependencies
+
 1. Install Meteor by following the instructions on the Meteor website (https://www.meteor.com/install)
 
 2. Clone this repository (or download it as a zip and extract)
