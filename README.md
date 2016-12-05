@@ -65,6 +65,9 @@ The following steps will build the GroupUp application while automatically pulli
 4. Run “npm install” (This will only have to be run once for this project)
 
 5. Enter the command “meteor” into your terminal. (Note: The first build will take several minutes to complete).
+
 ##Troubleshooting
+
 1. The first build will take several minutes to complete
+
 2. Be sure to do an “npm install”
