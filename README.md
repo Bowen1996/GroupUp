@@ -1,8 +1,8 @@
 #GroupUp
 GroupUp is a web application designed for students and professors of classes that require students to form groups. Students can create profiles that list their skills and expertise as well as their availability, propose group projects, describe the skills and availability they are seeking in other group members, and join other groups. Professors are able to upload csv files with the students’ information, set the number of students allowed in groups, create a list of skills she feels are relevant for the project for students to rate themselves, and randomly assign students to groups. 
 ##Release Notes
-###Features:
-####Professors:
+###New Features:
+####Professor Features:
 1. Professors can create an account and log in.
 
 2. Professors can create a project by uploading a csv containing student emails.
@@ -14,7 +14,7 @@ GroupUp is a web application designed for students and professors of classes tha
 5. Professors have the ability to manually group students into groups.
 
 
-####Students:
+####Student Features:
 1. Students can create an account and log in.
 
 2. Students can use a url given to them by their professor to join a project.
