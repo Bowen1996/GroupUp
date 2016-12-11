@@ -1,4 +1,4 @@
-#GroupUp - Release 1.0
+#GroupUp - Release 1.1
 GroupUp is a web application that allows students to form groups for academic group projects. Students can create profiles that list their skills and expertise as well as their availability, propose group projects, describe the skills and availability they are seeking in other group members, and group up with other students. Professors can upload csv files with the students’ information, set the number of students allowed in groups, create a list of relevant skills for the project, and randomly assign students to groups. 
 ##Release Notes
 ###New Features:
