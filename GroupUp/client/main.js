@@ -17,6 +17,9 @@ import CreateNewGroup from './components/student/create_new_group';
 import StudentDashboard from './components/student/student_dashboard';
 import AboutMeForm from './components/student/about_me/about_me_form';
 import CurrentGroups from './components/student/current_groups';
+import GroupProfile from './components/student/group_profile';
+import StudentProfile from './components/student/student_profile_page';
+
 
 const routes = (
   <Router history={browserHistory}>
@@ -39,6 +42,8 @@ const routes = (
       <Route path="my-group/:projectId" component={MyGroup} />
       <Route path="create-new-group/:projectId" component={CreateNewGroup} />
       <Route path="current-groups/:projectId" component={CurrentGroups} />
+      <Route path="group-profile/:groupId/:type" component={GroupProfile} />
+      <Route path="student-profile/:projectId/:student" component={StudentProfile} />
     </Route>
 
     {/*Routes Using Professor Project URL*/}

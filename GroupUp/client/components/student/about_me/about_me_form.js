@@ -44,8 +44,9 @@ class AboutMeForm extends Component {
     let skills = [];
     for (let i = 0; i < this.props.project.skills.length; i++) {
       const currentSkill = this.refs["skill" + i];
+      const currentSkillName = this.props.project.skills[i].text;
       if (currentSkill.getSkill() !== null) {
-        skills.push({index: i, proficiency: currentSkill.getSkill()});
+        skills.push({index: i, name: currentSkillName, proficiency: currentSkill.getSkill()});
       }
     }
     return skills;
@@ -71,7 +72,7 @@ class AboutMeForm extends Component {
                   <div className="form-group">
                     <label>Schedule Picker:</label>
                     <p>Click All Possible Weekly Meeting Times (select as many times as possible)</p>
-                    <SchedulePicker ref="schedulePicker"/>
+                    <SchedulePicker ref="schedulePicker" readOnly={false}/>
                   </div>
                   <div className="form-group">
                     <label>My short bio:</label>

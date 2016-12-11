@@ -3,68 +3,52 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Link, browserHistory } from 'react-router';
 import { Profiles } from '../../../imports/collections/profiles';
 
+import Button from '../utility/button';
+import ButtonSuccess from '../utility/button_success';
+import ButtonDanger from '../utility/button_danger';
+
 /**
 * A card displaying a student's email, image, and a link to their profile page.
 */
 export default class ProfileCard extends Component {
   /**
-  * Render buttons for profile card
+  * Accept student into your group
   */
-  renderButtons() {
-    if (this.props.displayAccept === "true") {
-      return(
-        <div>
-          <button
-            className="btn btn-raised btn-default btn-block">
-            Profile
-          </button>
-          <button
-            className="btn btn-raised btn-success btn-block">
-            Accept
-          </button>
-        </div>
-      )
-    } else {
-      return(
-        <button
-          className="btn btn-raised btn-default btn-block">
-          Profile
-        </button>
-      )
-    }
+  acceptStudent() {
+    console.log(this.props.student);
+    console.log(this.props.groupId);
+    console.log(this.props.projectId);
+    Meteor.call('groups.acceptRequest', this.props.student, this.props.groupId, this.props.projectId);
+    browserHistory.push('/my-group/' + this.props.projectId);
   }
 
   /**
   * React render function
   */
   render() {
-    if (!this.props.ready) {return <span>loading...</span>}
+    let acceptStudentButton = null;
+    if (this.props.displayAccepted === "true") {
+      acceptStudentButton = (
+        <ButtonDanger onClick='' text="Needs to Confirm" />
+      );
+    } else if (this.props.displayAccept === "true") {
+      acceptStudentButton = (
+        <ButtonSuccess onClick={this.acceptStudent.bind(this)} text="Accept" />
+      );
+    }
     return (
       <div className="col-sm-3">
-        <Link to={this.props.link} className="no-link-style">
         <div className="panel panel-default">
           <div className="panel-body">
-            <h3 className="text-center">{this.props.profile.student_email}</h3>
+            <p className="text-center">{this.props.student}</p>
             <img className="profile-image" src={this.props.imageLink} />
-            {this.renderButtons()}
+            <Link to={"/student-profile/" + this.props.projectId + "/" + this.props.student} className="no-link-style">
+              <Button onClick='' text="Profile" />
+            </Link>
+            {acceptStudentButton}
           </div>
         </div>
-        </Link>
       </div>
     )
   }
 }
-
-export default createContainer((props) => {
-  let profileReady = Meteor.subscribe('profiles.studentProfileForProject',  props.email, props.projectId).ready();
-  let profile = Profiles.find({}).fetch();
-  if (profile.length > 0) {
-    profile = profile[0];
-  } else {
-    profile = undefined;
-  }
-  return {
-    ready : profileReady,
-    profile: profile,
-  }
-}, ProfileCard);

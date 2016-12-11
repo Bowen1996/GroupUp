@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '../../../../imports/collections/projects';
+import { Groups } from '../../../../imports/collections/groups';
 import ManuallyGroupStudentGroupsPanel from './manually_group_student_groups_panel';
 import ManuallyGroupStudentItem from './manually_group_student_item';
-
-let ungrouped = [];
-let grouped = [];
-let setInitState = true;
+import Back from '../../utility/back';
 
 /**
 * Presents the Manualy Grouping page, which can used by professors to group students as they choose.
@@ -18,20 +16,10 @@ class ManuallyGroupPage extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = { ungrouped: ungrouped, grouped: grouped };
   }
 
   /**
-  * Resets the ungrouped and grouped arrays to the arrays from the database (used when the professor inputted CSV file is updated)
-  */
-  resetState() {
-    ungrouped = this.props.project.ungrouped;
-    grouped = this.props.project.groups;
-    this.setState({ ungrouped: ungrouped, grouped: grouped });
-  }
-
-  /**
-  * Moves the currently selected people to the array of ungrouped students.
+  * Moves the currently selected people to the selected group
   */
   moveToGrouped() {
     var groupRadios = document.getElementsByName('pushToGroup');
@@ -42,53 +30,41 @@ class ManuallyGroupPage extends Component {
       }
     }
 
+    let project_id = this.props.project._id;
+    let group_id = this.props.groups[x]._id;
+
     $('#ungrouped .active').each(function(index) {
-      var text = $(this).text();
-      grouped[x].students.push({ email: text });
-      for (var i = 0; i < ungrouped.length; i++) {
-        if (ungrouped[i].email === text) {
-          ungrouped.splice(i, 1);
-        }
-      }
-      $(this).removeClass('active');
+      var email = $(this).text();
+      Meteor.call('groups.officiallyJoinGroup', email, group_id, project_id);
+      $(this).removeClass("active");
     });
-    this.setState({ ungrouped: ungrouped, grouped: grouped });
   }
 
   /**
-  * Moves the currently selected people to the array of ungrouped students.
+  * Gets the groupId of a given group in the DOM
+  */
+  getGroupId(index) {
+    return this.props.groups[index]._id;
+  }
+
+  /**
+  * Moves the currently selected people to the ungrouped students.
   */
   moveToUngrouped() {
-    $('#grouped .active').each(function(index) {
-      var text = $(this).text();
-      ungrouped.push({ email: text });
-      for (var i = 0; i < grouped.length; i++) {
-        for (var j = 0; j < grouped[i].students.length; j++) {
-          if (grouped[i].students[j].email === text) {
-            grouped[i].students.splice(j, 1);
-          }
-        }
-      }
-      $(this).removeClass('active');
-    });
-    this.setState({ ungrouped: ungrouped, grouped: grouped });
-  }
+    var x = 0;
+    let project_id = this.props.project._id;
+    var self = this;
 
-  /**
-  * Updates database with to the currently formed groups.
-  */
-  updateProjectsWithNewGroups() {
-    Meteor.call('projects.update', this.props.params.projectId, {
-      professor: Meteor.userId(),
-      name: this.props.project.name,
-      description: this.props.project.description,
-      deadline: this.props.project.deadline,
-      min_teammates: this.props.project.min_teammates,
-      max_teammates: this.props.project.max_teammates,
-      skills: this.props.project.skills,
-      ungrouped: ungrouped,
-      groups: grouped,
-      csv_name: this.props.project.csv_name,
+    $('.manually_group_item').each(function(index) {
+      let group_id = self.getGroupId(x);
+
+      $(this).find('.active').each(function(index) {
+        var email = $(this).text();
+        Meteor.call('projects.removeStudentFromGroup', email, group_id);
+        $(this).removeClass("active");
+      });
+
+      x++;
     });
   }
 
@@ -96,16 +72,15 @@ class ManuallyGroupPage extends Component {
   * React render function
   */
   render() {
-    if (!this.props.ready) { return <span>Loading...</span> }
-    if (this.props.ready && setInitState) {
-      setInitState = false;
-      this.resetState();
-    }
+    if (!this.props.project_ready || !this.props.groups_ready) { return <span>Loading...</span> }
 
     return(
       <div className="container">
         <div className="row">
-          <div className="col-md-8 col-center">
+          <div className="col-md-2">
+            <Back link={"/project-dashboard/" + this.props.params.projectId} />
+          </div>
+          <div className="col-md-8 col-offest-md-2">
             <div className="panel panel-default">
               <div className="panel-heading text-center">
                 <h3>Manually Group Students</h3>
@@ -117,7 +92,6 @@ class ManuallyGroupPage extends Component {
                   checkbox next to a group student and then click the left arrow button
                   to ungroup that student.
                 </h4>
-                <br></br>
                 <h4>
                   If you have inputted a new CSV file and the results are below are not correct, please refresh the page.
                 </h4>
@@ -139,8 +113,8 @@ class ManuallyGroupPage extends Component {
             <div className="panel panel-default">
               <div className="panel-heading">Ungrouped Students</div>
               <div id="ungrouped" className="list-group-orig panel-body">
-                {this.state.ungrouped.map(student =>
-                  <ManuallyGroupStudentItem email={student.email} />
+                {this.props.project.ungrouped.map(studentEmail =>
+                  <ManuallyGroupStudentItem email={studentEmail} />
                 )}
               </div>
             </div>
@@ -159,20 +133,9 @@ class ManuallyGroupPage extends Component {
           </div>
           <div id="grouped" className="col-sm-5">
             <form action="">
-            {this.state.grouped.map(group =>
-              <ManuallyGroupStudentGroupsPanel title={group.name} group={group.students} />
-            )}
-            </form>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-2 col-center">
-            <form method="POST">
-              <button
-                className="btn btn-default btn-raised btn-block"
-                onClick={this.updateProjectsWithNewGroups.bind(this)}>
-                Confirm
-              </button>
+              {this.props.groups.map(group =>
+                <ManuallyGroupStudentGroupsPanel title={group.title} group={group.student_emails} />
+              )}
             </form>
           </div>
         </div>
@@ -183,7 +146,9 @@ class ManuallyGroupPage extends Component {
 
 export default createContainer((props) => {
   return {
-    ready: Meteor.subscribe('projectsById', props.params.projectId).ready(),
-    project: Projects.findOne(props.params.projectId)
+    project_ready: Meteor.subscribe('projectsById', props.params.projectId).ready(),
+    groups_ready: Meteor.subscribe('groups.inProject', props.params.projectId).ready(),
+    project: Projects.findOne(props.params.projectId),
+    groups: Groups.find({"project_id": props.params.projectId}).fetch()
   }
 }, ManuallyGroupPage);

@@ -5,6 +5,8 @@ import { Groups } from '../../../imports/collections/groups';
 
 import GroupCard from '../student/group_card';
 
+const CARD_ACCEPTED = 2;
+
 /**
 * Displays groups that have accepted the student user
 */
@@ -27,9 +29,9 @@ class AcceptedCard extends Component {
                     {this.props.acceptedGroups.map(group =>
                       <GroupCard
                         key={"accepted_group_card_" + group._id}
-                        link=""
-                        title={group.title}
-                        message={group.description}
+                        group={group}
+                        type={CARD_ACCEPTED}
+                        student={this.props.student}
                       />
                     )}
                   </div>
@@ -44,13 +46,13 @@ class AcceptedCard extends Component {
 
 export default createContainer((props) => {
   if (Meteor.user() !== undefined) {
-    //TODO: get the groups that a student has been ACCEPTED TO
-    // Groups that have accepted the student
-    let ready = Meteor.subscribe('groups.studentRequests', Meteor.user().emails[0].address, props.projectId).ready()
-    let acceptedGroups = Groups.find({"requests": Meteor.user().emails[0].address}).fetch();
+    let studentEmail = Meteor.user().emails[0].address;
+    let ready = Meteor.subscribe('groups.acceptingStudent', studentEmail, props.projectId).ready();
+    let acceptedGroups = Groups.find({$and: [{"accepted": studentEmail}, {"project_id": props.projectId}]}).fetch();
     return {
       ready: ready,
       acceptedGroups: acceptedGroups,
+      student: studentEmail,
     }
   } else {
     return {ready: false}

@@ -22,9 +22,9 @@ export default class ManuallyGroupStudentGroupsPanel extends Component {
           <input type="radio" id="groupRadioButton" name="pushToGroup" />
           {this.props.title}
         </div>
-        <div className="list-group-orig panel-body">
-          {this.props.group.map(student =>
-            <ManuallyGroupStudentItem email={student.email} />
+        <div className="list-group-orig panel-body manually_group_item">
+          {this.props.group.map(studentEmail =>
+            <ManuallyGroupStudentItem email={studentEmail} />
           )}
         </div>
       </div>

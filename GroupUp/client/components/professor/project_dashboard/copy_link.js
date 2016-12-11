@@ -24,7 +24,7 @@ export default class CopyLink extends Component {
   copyLink(e) {
     e.preventDefault();
     const projectId = this.props.projectId;
-    copy("Visit: groupup.com/" + projectId + ". Create an account, and click on the project named example.");
+    copy("Visit: http://localhost:3000/" + projectId + ". Create an account, and click on the project named example.");
     this.setState({ copied: true });
   }
 

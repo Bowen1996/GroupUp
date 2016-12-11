@@ -29,7 +29,7 @@ Meteor.methods({
    * @param {Object} data, the profile data used to update the profile
    */
   'profiles.update'(profile_id, data) {
-  }
+  },
 });
 
 export const Profiles = new Mongo.Collection('profiles');

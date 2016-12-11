@@ -39,12 +39,14 @@ export default class SchedulePicker extends Component {
   * If the item is on, toggle off, and vice versa
   */
   toggleSelected() {
-    if (this.state.gridClass === CLASS_NAME) {
-      this.setState({gridClass: CLASS_NAME_SELECTED});
-      this.props.updateArray(this.props.row, this.props.col, 1);
-    } else {
-      this.setState({gridClass: CLASS_NAME});
-      this.props.updateArray(this.props.row, this.props.col, 0);
+    if (!this.props.readOnly) {
+      if (this.state.gridClass === CLASS_NAME) {
+        this.setState({gridClass: CLASS_NAME_SELECTED});
+        this.props.updateArray(this.props.row, this.props.col, 1);
+      } else {
+        this.setState({gridClass: CLASS_NAME});
+        this.props.updateArray(this.props.row, this.props.col, 0);
+      }
     }
   }
 

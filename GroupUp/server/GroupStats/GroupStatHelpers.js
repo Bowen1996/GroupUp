@@ -30,7 +30,7 @@ function extractStudentsFromGroups(groups) {
  * @return {number} count of all students in project
  */
 function getNumStudents(ungrouped_students, grouped_students) {
-  return (ungrouped_students.length + group_students.length);
+  return (ungrouped_students.length + grouped_students.length);
 }
 
 /**
@@ -91,7 +91,7 @@ function classifyGroups(min_limit, max_limit, groups) {
  */
 function getGroupStats(project_id) {
   const project = Projects.findOne({"_id":project_id});
-  const ungrouped_students = project.ungrouped_students;
+  const ungrouped_students = project.ungrouped;
   const min_limit = project.min_teammates;
   const max_limit = project.max_teammates;
   const groups = getAllGroupsInProject(project_id);
@@ -99,6 +99,16 @@ function getGroupStats(project_id) {
   const num_students = getNumStudents(ungrouped_students, grouped_students);
   const all_students = getAllStudents(ungrouped_students, grouped_students);
   const classified_groups = classifyGroups(min_limit, max_limit, groups);
+
+/*
+  console.log({
+    "num_students": num_students,
+    "num_ungrouped": ungrouped_students.length,
+    "num_grouped": grouped_students.length,
+    "classified_groups": classified_groups,
+    "all_students": all_students
+  });
+  */
 
   return {
     "num_students": num_students,

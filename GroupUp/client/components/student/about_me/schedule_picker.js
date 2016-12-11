@@ -80,7 +80,7 @@ export default class SchedulePicker extends Component {
                     if (hour > 12) {
                       hour = hour - 12;
                     }
-                    return  <ScheduleGridItem key={"grid" + rowIndex + "" + colIndex} selected={scheduleArray[rowIndex][colIndex]} updateArray={this.updateArray.bind(this)} col={colIndex} row={rowIndex} text={hour + " " + amOrPm} />
+                    return  <ScheduleGridItem key={"grid" + rowIndex + "" + colIndex} readOnly={this.props.readOnly} selected={scheduleArray[rowIndex][colIndex]} updateArray={this.updateArray.bind(this)} col={colIndex} row={rowIndex} text={hour + " " + amOrPm} />
                   }
                 )}
               </tr>

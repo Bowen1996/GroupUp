@@ -24,12 +24,24 @@ export default class RequestsCard extends Component {
                 <div className="col-sm-12 col-center">
                   {this.props.group.requests.map(request =>
                     <ProfileCard
-                      key={"profile_card_" + request}
-                      email={request}
+                      key={"profile_card_requested_" + request}
+                      student={request}
+                      groupId={this.props.group._id}
                       projectId={this.props.projectId}
                       imageLink="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
                       buttonText="Profile"
                       displayAccept="true"
+                    />
+                  )}
+                  {this.props.group.accepted.map(request =>
+                    <ProfileCard
+                      key={"profile_card_accepted_" + request}
+                      student={request}
+                      groupId={this.props.group._id}
+                      projectId={this.props.projectId}
+                      imageLink="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                      buttonText="Profile"
+                      displayAccepted="true"
                     />
                   )}
                 </div>

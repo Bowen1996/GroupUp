@@ -79,11 +79,17 @@ Meteor.publish('projectsById', function(projectId) {
  * @return the projects by student id
  */
 Meteor.publish("projectsByStudentId", function(student_email) {
-  return Projects.find({ $or: [
-      {"ungrouped": student_email},
-      {"groups.student_emails": student_email},
-    ]},
-  {});
+  let project_ids = [];
+  const ungrouped_projects = Projects.find({"ungrouped": student_email}).fetch();
+  ungrouped_projects.forEach(function(element) {
+    project_ids.push(element._id);
+  });
+  const found_groups = Groups.find({"student_emails": student_email}).fetch();
+  found_groups.forEach(function(element) {
+    project_ids.push(element.project_id);
+  });
+
+  return Projects.find({"_id": {$in: project_ids}});
 });
 
 //Groups Publications
@@ -105,7 +111,7 @@ Meteor.publish("groups.studentsRequestingToJoinGroup",
  * @return Group by id
  */
 Meteor.publish("groupById", function(group_id) {
-  return Groups.findOne({"_id": group_id});
+  return Groups.find({"_id": group_id});
 });
 
 /**
@@ -132,6 +138,17 @@ Meteor.publish("groups.forStudent", function(student_email, project_id = null) {
   return Groups.find(query);
 });
 
+Meteor.publish("groups.untouchedGroupsForStudent", function(student_email, project_id) {
+  const query = {$and: [{"project_id": project_id},
+    {$and: [
+      {"requests": {$ne: student_email}},
+      {"accepted": {$ne: student_email}},
+      {"student_emails": {$ne: student_email}},
+    ]}
+  ]};
+  return Groups.find(query);
+});
+
 /**
  * Returns all groups that student requested to join, or groups that student has
  * requested to join in a specific project
@@ -143,7 +160,22 @@ Meteor.publish("groups.studentRequests", function(student_email, project_id) {
   if (!project_id) {
     return Groups.find({"requests": student_email});
   }
-  const query = {$and: [{"student_emails": student_email}, {"project_id": project_id}]};
+  const query = {$and: [{"requests": student_email}, {"project_id": project_id}]};
+  return Groups.find(query);
+});
+
+/**
+ * Returns all groups that have accepted student, or groups that student has
+ * requested to join in a specific project
+ * @param {String} student_email id
+ * @param {String} project_id of a project for specific retrieval
+ * @return groups student has requested to join
+ */
+Meteor.publish("groups.acceptingStudent", function(student_email, project_id) {
+  if (!project_id) {
+    return Groups.find({"accepted": student_email});
+  }
+  const query = {$and: [{"accepted": student_email}, {"project_id": project_id}]};
   return Groups.find(query);
 });
 

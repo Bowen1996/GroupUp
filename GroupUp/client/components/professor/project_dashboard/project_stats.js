@@ -34,7 +34,7 @@ export default class ProjectStats extends Component {
   * React render function
   */
   render() {
-    if (this.state.projectStats === null) {return <span>Loading...</span>}
+    if (this.state.projectStats === null || this.state.projectStats === undefined) {return <span>Loading...</span>}
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
@@ -43,8 +43,8 @@ export default class ProjectStats extends Component {
         <div className="panel-body">
           <row>
             <div className="col-sm-3 text-center">
-              <p># of filled groups: </p>
-              <h3>{this.state.projectStats.classified_groups.filled.length}</h3>
+              <p># of valid  <br />groups: </p>
+              <h3>{this.state.projectStats.classified_groups.valid_filled.length + this.state.projectStats.classified_groups.valid_unfilled.length}</h3>
             </div>
             <div className="col-sm-3 text-center">
               <p># of unfilled groups: </p>

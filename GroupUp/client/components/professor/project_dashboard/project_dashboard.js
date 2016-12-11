@@ -17,7 +17,6 @@ class ProjectDashboard extends Component {
   * React render function
   */
   render() {
-    console.log(this.props.project);
     if(!this.props.ready){return <span>Loading...</span>}
     return (
       <div className="row">
