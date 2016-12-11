@@ -45,8 +45,6 @@ This is release 1.0 (no relevant bug fixes yet). See below for missing features 
 
 2. Manually grouping students currently does not take into account size constraints for the groups (for example, a professor could create a group of 7 students even if the max size is 5).
 
-3. When joining a group, the project is no longer shown on the student dashboard. This issue will be fixed as soon as possible.
-
 ##Install Guide
 
 ###Pre-requisites
